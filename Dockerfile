@@ -1,7 +1,6 @@
 FROM ubuntu:20.04
 RUN   apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -q -y wget \
     texlive-full \
-    libgl1- \
     python3 \
     python3-pip 
 COPY . /app
