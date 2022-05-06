@@ -26,8 +26,8 @@ jobs:
       
     - name: Generate Image Tag
       run: |
-        IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME:$(date +%s)
-        IMAGE_TAG=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+        export IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME:$(date +%s)
+        export IMAGE_TAG=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
         
     - name: Test ENV
