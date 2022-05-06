@@ -29,11 +29,20 @@ jobs:
         export IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME:$(date +%s)
         export IMAGE_TAG=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+        echo "IMAGE_TAG=$IMAGE_TAG"
+        echo "image_tag=$IMAGE_TAG" >> $GITHUB_ENV
+        echo "image_tag=$IMAGE_TAG"
+        echo "action_state=yellow" >> $GITHUB_ENV
+        echo "action_state=yellow"
         
     - name: Test ENV
       run: |
         echo IMAGE_TAG=$IMAGE_TAG
         echo env.IMAGE_TAG=${{env.IMAGE_TAG}}
+        echo image_tag=$image_tag
+        echo env.image_tag=${{env.image_tag}}
+        echo "${{ env.action_state }}"
+        echo "env.action_state=${{ env.action_state }}"
     
     - uses: actions/checkout@v3
     - name: Build the Docker image
