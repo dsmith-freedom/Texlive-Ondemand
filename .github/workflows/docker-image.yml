@@ -19,16 +19,20 @@ jobs:
       contents: read
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: |
-        IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME:$(date +%s)
-        IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-        docker build . --file Dockerfile --tag $IMAGE_ID
-
+    
     - name: Log in to registry
       # This is where you will update the PAT to GITHUB_TOKEN
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      
+    - name: Generate Image Tag
+      run: |
+        IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME:$(date +%s)
+        IMAGE_TAG=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+        echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+    
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag $IMAGE_TAG
 
     - name: Push image
-      run: docker push $IMAGE_ID
+      run: docker push $IMAGE_TAG
